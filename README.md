@@ -1,4 +1,5 @@
-# Latest React redux thunk react-router webpack4 boilerplate [![GitHub license](https://img.shields.io/badge/license-MIT-lime.svg)](https://github.com/cloud-github/react-redux-thunk-react-router-webpack4-eslint-css-loaders-image-loaders-all-configured-boilerplate/blob/master/LICENSE) [![Build Status](https://travis-ci.org/cloud-github/react-redux-thunk-react-router-webpack4-eslint-loaders-pre-configured-boilerplate.svg?branch=master)](https://travis-ci.org/cloud-github/react-redux-thunk-react-router-webpack4-eslint-loaders-pre-configured-boilerplate)
+# Simple CRUD (Create Read Update Delete) in React Js.
+ [![GitHub license](https://img.shields.io/badge/license-MIT-lime.svg)](https://github.com/cloud-github/react-redux-thunk-react-router-webpack4-eslint-css-loaders-image-loaders-all-configured-boilerplate/blob/master/LICENSE) [![Build Status](https://travis-ci.org/cloud-github/react-redux-thunk-react-router-webpack4-eslint-loaders-pre-configured-boilerplate.svg?branch=master)](https://travis-ci.org/cloud-github/react-redux-thunk-react-router-webpack4-eslint-loaders-pre-configured-boilerplate)
 A simple portfolio website build with react, redux, redux-thunk, webpack4 with production build ready.
 
 * Ready to start React Redux App

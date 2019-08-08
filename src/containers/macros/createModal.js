@@ -6,22 +6,17 @@ import { connect } from "react-redux";
 import React, { Component } from "react";
 import Modal from "react-responsive-modal";
 import { Form, Field } from "react-final-form";
-import {
-  MACRO_TYPES,
-  CHARCOUNTERMAX,
-  FILE_FIELD_NAME
-} from "../../constants/macros";
+import { MACRO_TYPES, CHARCOUNTERMAX } from "../../constants/macros";
 import Froala from "../../components/froala";
 import { stripValueObject } from "../../utils/object";
-import createMacro from "../../actions/macros/createMacro";
-import renderDropzoneInput from "../../components/fileImport";
+import createMacro from "../../actions/createMacro";
 import selectInput from "../../components/selectInput/selectInput";
 import renderField from "../../components/miscellaneous/renderField";
 import selectCreatable from "../../components/selectInput/selectCreatable";
 import mentionsTextInput from "../../components/autoSuggestion/mentionsTextInput";
-import createMacroCategory from "../../actions/macroCategories/createMacroCategory";
-import getMergeVariablesLikeName from "../../actions/mergeVariables/getMergeVariablesLikeName";
-import getMacroCategoriesLikeName from "../../actions/macroCategories/getMacroCategoriesLikeName";
+import createMacroCategory from "../../actions/createMacroCategory";
+import getMergeVariablesLikeName from "../../actions/getMergeVariablesLikeName";
+import getMacroCategoriesLikeName from "../../actions/getMacroCategoriesLikeName";
 
 const styles = {
   paddingBottom: 38
@@ -57,17 +52,14 @@ class MacroCreateModal extends Component {
 
   onSubmit(values) {
     let stripedValues = stripValueObject(values);
-    if (values.files) {
-      stripedValues.files = values.files;
-    }
-    const { createMacro } = this.props;
+    /*const { createMacro } = this.props;
     createMacro(stripedValues).then(response => {
       if (response) {
         const { addToMacros } = this.props;
         addToMacros(response, true);
         this.onCloseModal();
       }
-    });
+    });*/
   }
 
   getInitialValues() {
@@ -157,20 +149,27 @@ class MacroCreateModal extends Component {
     return (
       <div style={styles}>
         <button
-          className="btn btn-primary"
+          className="btn btn-primary float-right"
           onClick={this.onOpenModal}
           type="submit"
         >
-          Create Macro
+          <i className="material-icons">&#xE147;</i> <span>Add New Macro</span>
         </button>
+        <button
+          className="btn btn-danger float-right"
+          onClick={this.onOpenModal}
+          type="submit"
+        >
+          <i className="material-icons">&#xE15C;</i> <span>Delete</span>
+        </button>
+
         <Modal open={open} onClose={this.onCloseModal} center>
           <div className="modal-wrapper">
             <div className="modal-header">
               <div className="w-row">
                 <div className="w-col w-col-10">
                   <div className="modal-title">
-                    Create new email or SMS macros. Keep it private or share
-                    with your team members
+                    Create new email or SMS macros.
                   </div>
                 </div>
               </div>
@@ -194,24 +193,22 @@ class MacroCreateModal extends Component {
                       <form onSubmit={handleSubmit}>
                         <div className="row">
                           <div className="col-sm-12" style={styles}>
-                            <label>Type</label>
+                            {/*<label>Type</label>*/}
                             <Field
                               name="type"
                               options={MACRO_TYPES}
                               component={selectInput}
                             />
                           </div>
-
                           <div className="col-sm-12" style={styles}>
                             <Field
                               name="name"
-                              placeholder="Name Ex. Follow-up template"
+                              placeholder="Macro name"
                               type="text"
                               className="text-fields w-input"
                               component={renderField}
                             />
                           </div>
-
                           <div className="col-sm-12" style={styles}>
                             <Field
                               name="macroCategoryId"
@@ -230,24 +227,24 @@ class MacroCreateModal extends Component {
                             />
                           </div>
                           {type.value === "email" && (
-                            <div className="col-sm-5" style={styles}>
+                            <div className="col-sm-6" style={styles}>
                               <Field
                                 singleLine
                                 name="subject"
                                 component={mentionsTextInput}
-                                placeholder="Merge tag using '@'"
+                                placeholder="Subject"
                                 mergeVariablesSearch={this.mergeVariableSearch}
                               />
                             </div>
                           )}
 
                           {type.value === "sms" && (
-                            <div className="col-sm-5" style={styles}>
+                            <div className="col-sm-6" style={styles}>
                               <Field
                                 name="subject"
                                 component={mentionsTextInput}
                                 maxTextLength={CHARCOUNTERMAX}
-                                placeholder="Merge tag using '@'"
+                                placeholder="Message"
                                 mergeVariablesSearch={this.mergeVariableSearch}
                               />
                             </div>
@@ -264,38 +261,23 @@ class MacroCreateModal extends Component {
                               />
                             </div>
                           )}
-
+                        </div>
+                        <div className="row mt-4">
                           <div className="col-sm-12" style={styles}>
-                            <label htmlFor={FILE_FIELD_NAME}>
-                              Upload image
-                            </label>
-                            <Field
-                              multiple
-                              accept="image/*"
-                              maxSize={500000} // 500 kb
-                              name={FILE_FIELD_NAME}
-                              component={renderDropzoneInput}
-                            />
-                          </div>
-                          <div className="row">
-                            <div className="col-md-6">
-                              <button
-                                type="button"
-                                className="btn btn-outline-danger"
-                                onClick={this.onCloseModal}
-                              >
-                                Cancel
-                              </button>
-                            </div>
-                            <div className="col-md-6">
-                              <button
-                                type="submit"
-                                className="btn btn-outline-primary"
-                                disabled={invalid || submitting}
-                              >
-                                Create Macro
-                              </button>
-                            </div>
+                            <button
+                              type="button"
+                              className="btn btn-outline-danger float-left"
+                              onClick={this.onCloseModal}
+                            >
+                              Cancel
+                            </button>
+                            <button
+                              type="submit"
+                              className="btn btn-outline-primary float-right"
+                              disabled={invalid || submitting}
+                            >
+                              Create Macro
+                            </button>
                           </div>
                         </div>
                       </form>

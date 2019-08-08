@@ -1,4 +1,5 @@
 const path = require("path");
+var webpack = require("webpack");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 
 module.exports = {
@@ -34,19 +35,16 @@ module.exports = {
             }
           }
         ]
-      },
-      // Vendor CSS loader
-      // This is necessary to pack third party libraries like antd
-      {
-        test: /\.css$/,
-        include: path.resolve(__dirname, "../node_modules"),
-        use: ["style-loader", "css-loader"]
       }
     ]
   },
   plugins: [
     new HtmlWebPackPlugin({
       template: path.resolve(__dirname, "../public", "index.html")
+    }),
+    new webpack.ProvidePlugin({
+      $: "jquery",
+      jQuery: "jquery"
     })
   ],
   resolve: {

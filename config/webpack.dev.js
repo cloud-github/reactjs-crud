@@ -1,8 +1,7 @@
 const merge = require("webpack-merge");
+const path = require("path");
 const common = require("./webpack.common.js");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-
-const mapStyle = process.env.MAP_STYLE === "true";
 
 module.exports = merge(common, {
   mode: "development",
@@ -17,21 +16,14 @@ module.exports = merge(common, {
   module: {
     rules: [
       {
-        test: /\.css$/,
-        use: [
-          { loader: "style-loader" },
-          { loader: mapStyle ? "css-loader?sourceMap" : "css-loader" }
-        ]
-      },
-      {
-        test: /\.s(a|c)ss$/,
-        use: [
-          { loader: "style-loader" },
-          { loader: "css-loader" },
-          { loader: "sass-loader" }
-        ]
+        test: /\.(sa|sc|c)ss$/,
+        include: [
+          path.resolve(__dirname, "../src/assets"),
+          path.resolve(__dirname, "../node_modules")
+        ],
+        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"]
       }
-      /*{                            uncomment this to run eslint in runtime
+      /*{                      uncomment this to run eslint in runtime
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: { loader: "babel-loader" }

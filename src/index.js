@@ -4,8 +4,6 @@ import { Provider } from "react-redux";
 import { ConnectedRouter } from "connected-react-router";
 import { store, history } from "./store";
 import App from "./app";
-import "./assets/styles/style.css";
-//import './assets/styles/style.sass';
 
 ReactDOM.render(
   <Provider store={store}>

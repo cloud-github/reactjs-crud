@@ -16,16 +16,12 @@ module.exports = merge(common, {
   module: {
     rules: [
       {
-        test: /\.css$/,
-        use: [{ loader: MiniCssExtractPlugin.loader }, { loader: "css-loader" }]
-      },
-      {
-        test: /\.s(a|c)ss$/,
-        use: [
-          { loader: MiniCssExtractPlugin.loader },
-          { loader: "css-loader" },
-          { loader: "sass-loader" }
-        ]
+        test: /\.(sa|sc|c)ss$/,
+        include: [
+          path.resolve(__dirname, "../src/assets"),
+          path.resolve(__dirname, "../node_modules")
+        ],
+        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"]
       }
     ]
   },

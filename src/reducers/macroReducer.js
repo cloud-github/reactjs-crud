@@ -5,6 +5,7 @@ const initialState = {
 };
 
 const macroReducer = (state = initialState, action) => {
+  console.log("action,", action);
   switch (action.type) {
     case "FETCH_MACRO_POST":
       return Object.assign({}, state, {
@@ -24,6 +25,31 @@ const macroReducer = (state = initialState, action) => {
         isFetching: false,
         isError: true
       });
+
+    case "ADD_NEW_MACRO":
+      return Object.assign({}, state, {
+        userData: [...state.userData, action.data],
+        isFetching: false,
+        isError: false
+      });
+
+    case "DELETE_MACRO": {
+      return Object.assign({}, state, {
+        userData: [
+          ...state.userData.filter(
+            item => item.id !== JSON.stringify(action.data.id)
+          )
+        ]
+      });
+    }
+
+    case "DELETE_MACRO_POST_ERROR":
+      return Object.assign({}, state, {
+        userData: action.data,
+        isFetching: false,
+        isError: true
+      });
+
     default:
       return state;
   }

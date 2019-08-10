@@ -1,14 +1,8 @@
 import { store } from "../store";
 
-export const fetch_macro_post = () => {
+export const add_macro_post = post => {
   return {
-    type: "FETCH_MACRO_POST"
-  };
-};
-
-export const receive_macro_post = post => {
-  return {
-    type: "FETCHED_MACRO_POST",
+    type: "ADD_NEW_MACRO",
     data: post
   };
 };
@@ -20,18 +14,35 @@ export const receive_macro_post_error = post => {
   };
 };
 
-export const getMacroData = () => {
-  store.dispatch(fetch_macro_post());
-  return function(dispatch /*getState*/) {
-    return fetch(`https://rails-api-only.herokuapp.com/v1/macros`)
+const createMacro = values => () => {
+  function onError(error) {
+    return error;
+  }
+  try {
+    const data = new FormData();
+    data.append("macro[name]", values.name);
+    data.append("macro[macro_type]", values.type);
+    data.append("macro[subject]", values.subject.text);
+    data.append("macro[macro_category_id]", values.macroCategoryId);
+    data.append("macro[body]", values.type === "email" ? values.body : "");
+    console.log("DATA : ", data);
+    return fetch(`http://localhost:3001/v1/macros`, {
+      method: "POST",
+      body: data
+    })
       .then(data => data.json())
       .then(data => {
+        console.log("RESPONSE: ", data);
         if (data.data && data.data.status >= 404) {
-          dispatch(receive_macro_post_error(data.message));
+          store.dispatch(receive_macro_post_error(data.message));
         } else {
-          dispatch(receive_macro_post(data));
+          store.dispatch(add_macro_post(data.data));
+          return data.data;
         }
       });
-    //.catch(err => dispatch(receive_macro_post_error()));
-  };
+  } catch (error) {
+    return onError(error);
+  }
 };
+
+export default createMacro;

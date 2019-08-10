@@ -216,7 +216,3 @@ export default class MentionsTextInput extends Component {
     );
   }
 }
-
-MentionsTextInput.propTypes = {
-  mergeVariablesSearch: PropTypes.func.isRequired
-};

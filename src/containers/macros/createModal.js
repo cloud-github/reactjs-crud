@@ -15,7 +15,6 @@ import renderField from "../../components/miscellaneous/renderField";
 import selectCreatable from "../../components/selectInput/selectCreatable";
 import mentionsTextInput from "../../components/autoSuggestion/mentionsTextInput";
 import createMacroCategory from "../../actions/createMacroCategory";
-import getMergeVariablesLikeName from "../../actions/getMergeVariablesLikeName";
 import getMacroCategoriesLikeName from "../../actions/getMacroCategoriesLikeName";
 
 const styles = {
@@ -31,7 +30,6 @@ class MacroCreateModal extends Component {
     };
     autoBind(this);
     this.macroCategorySearch = _.debounce(this.macroCategorySearch, 1000);
-    this.mergeVariableSearch = _.debounce(this.mergeVariableSearch, 1000);
   }
 
   onOpenModal() {
@@ -52,34 +50,18 @@ class MacroCreateModal extends Component {
 
   onSubmit(values) {
     let stripedValues = stripValueObject(values);
-    /*const { createMacro } = this.props;
+    const { createMacro } = this.props;
     createMacro(stripedValues).then(response => {
       if (response) {
-        const { addToMacros } = this.props;
-        addToMacros(response, true);
         this.onCloseModal();
       }
-    });*/
+    });
   }
 
   getInitialValues() {
     return {
       type: { label: "Email Macro", value: "email" }
     };
-  }
-
-  mergeVariableSearch(value, callback) {
-    const { getMergeVariablesLikeName } = this.props;
-    getMergeVariablesLikeName(value).then(response => {
-      if (response) {
-        callback(
-          response.data.map(variable => ({
-            id: String(variable.id),
-            display: variable.data_key
-          }))
-        );
-      }
-    });
   }
 
   validate(values) {
@@ -127,7 +109,7 @@ class MacroCreateModal extends Component {
         produce(draft => {
           draft.macroCategoriesOptions = response.map(data => ({
             value: String(data.id),
-            label: data.name
+            label: data.attributes.name
           }));
         })
       );
@@ -144,7 +126,7 @@ class MacroCreateModal extends Component {
 
   render() {
     const { open, macroCategoriesOptions } = this.state;
-    const { getMergeVariablesLikeName } = this.props;
+    const { deleteAllItems } = this.props;
 
     return (
       <div style={styles}>
@@ -157,12 +139,18 @@ class MacroCreateModal extends Component {
         </button>
         <button
           className="btn btn-danger float-right"
-          onClick={this.onOpenModal}
+          onClick={() => {
+            if (
+              window.confirm(
+                "Are you sure you wish to delete all selected item(s)?"
+              )
+            )
+              deleteAllItems();
+          }}
           type="submit"
         >
           <i className="material-icons">&#xE15C;</i> <span>Delete</span>
         </button>
-
         <Modal open={open} onClose={this.onCloseModal} center>
           <div className="modal-wrapper">
             <div className="modal-header">
@@ -233,7 +221,6 @@ class MacroCreateModal extends Component {
                                 name="subject"
                                 component={mentionsTextInput}
                                 placeholder="Subject"
-                                mergeVariablesSearch={this.mergeVariableSearch}
                               />
                             </div>
                           )}
@@ -245,20 +232,13 @@ class MacroCreateModal extends Component {
                                 component={mentionsTextInput}
                                 maxTextLength={CHARCOUNTERMAX}
                                 placeholder="Message"
-                                mergeVariablesSearch={this.mergeVariableSearch}
                               />
                             </div>
                           )}
 
                           {type.value === "email" && (
                             <div className="col-sm-12">
-                              <Field
-                                name="body"
-                                getMergeVariablesLikeName={
-                                  getMergeVariablesLikeName
-                                }
-                                component={Froala}
-                              />
+                              <Field name="body" component={Froala} />
                             </div>
                           )}
                         </div>
@@ -295,10 +275,9 @@ class MacroCreateModal extends Component {
 
 MacroCreateModal.propTypes = {
   createMacro: PropTypes.func.isRequired,
-  addToMacros: PropTypes.func.isRequired,
+  deleteAllItems: PropTypes.func,
   createMacroCategory: PropTypes.func.isRequired,
-  getMacroCategoriesLikeName: PropTypes.func.isRequired,
-  getMergeVariablesLikeName: PropTypes.func.isRequired
+  getMacroCategoriesLikeName: PropTypes.func.isRequired
 };
 
 export default connect(
@@ -306,7 +285,6 @@ export default connect(
   {
     createMacro,
     createMacroCategory,
-    getMergeVariablesLikeName,
     getMacroCategoriesLikeName
   }
 )(MacroCreateModal);

@@ -6,7 +6,9 @@ import Moment from "react-moment";
 import { css } from "@emotion/core";
 import { ClipLoader } from "react-spinners";
 import MacroCreateModal from "./createModal";
+import Checkbox from "../../components/checkbox";
 import { getMacroData } from "../../actions/fetchMacros";
+import { deleteMacro } from "../../actions/deleteMacro";
 import hero_img from "../../assets/images/hero.png";
 import Navbar from "../common/navbar";
 
@@ -16,16 +18,56 @@ const override = css`
   margin-top: 20%;
   border-color: red;
 `;
+
 class Index extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      checkedItems: new Map()
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.deleteAllItems = this.deleteAllItems.bind(this);
+  }
+
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch(getMacroData());
   }
+
+  deleteItem(id) {
+    const { dispatch } = this.props;
+    dispatch(deleteMacro(id));
+  }
+
+  editItem() {
+    console.log("item edit");
+  }
+
+  handleChange(e) {
+    const item = e.target.name;
+    const isChecked = e.target.checked;
+    this.setState(prevState => ({
+      checkedItems: prevState.checkedItems.set(item, isChecked)
+    }));
+  }
+
+  deleteAllItems() {
+    const { dispatch } = this.props;
+    let tempIds = [];
+    for (const entry of this.state.checkedItems.entries()) {
+      if (entry[1] === true) {
+        tempIds.push(entry[0]);
+      }
+    }
+    dispatch(deleteMacro(tempIds));
+  }
+
   render() {
-    console.log("props: ", this.props.data);
     const {
       data: { isError, userData, isFetching }
     } = this.props;
+    const { checkedItems } = this.state;
+
     let macros = [];
     if (isError) {
       return (
@@ -36,19 +78,18 @@ class Index extends Component {
       );
     }
     {
-      Object.keys(userData).length > 0
-        ? (macros = userData.data.map((listValue, index) => {
+      userData.length > 0
+        ? (macros = userData.map(listValue => {
             return (
-              <tr key={index}>
+              <tr key={listValue.id}>
                 <td>
                   <span className="custom-checkbox">
-                    <input
-                      type="checkbox"
-                      id="checkbox1"
-                      name="options[]"
-                      value="1"
+                    <Checkbox
+                      name={listValue.id}
+                      className="checkbox1"
+                      checked={checkedItems.get(listValue.id)}
+                      onChange={this.handleChange}
                     />
-                    <label htmlFor="checkbox1"></label>
                   </span>
                 </td>
                 <td>{listValue.attributes.name}</td>
@@ -76,9 +117,11 @@ class Index extends Component {
                 </td>
                 <td>
                   <a
-                    href="#editEmployeeModal"
+                    href="#"
                     className="edit"
-                    data-toggle="modal"
+                    onClick={e => {
+                      this.editItem(e);
+                    }}
                   >
                     <i
                       className="material-icons"
@@ -89,9 +132,16 @@ class Index extends Component {
                     </i>
                   </a>
                   <a
-                    href="#deleteEmployeeModal"
+                    href="#"
                     className="delete"
-                    data-toggle="modal"
+                    onClick={() => {
+                      if (
+                        window.confirm(
+                          "Are you sure you wish to delete this item?"
+                        )
+                      )
+                        this.deleteItem(listValue.id);
+                    }}
                   >
                     <i
                       className="material-icons"
@@ -118,7 +168,7 @@ class Index extends Component {
             color={"#0bceaf"}
             loading={isFetching}
           />
-          {Object.keys(userData).length > 0 ? (
+          {userData.length > 0 ? (
             <div className="container">
               <div className="table-wrapper">
                 <div className="table-title">
@@ -129,7 +179,7 @@ class Index extends Component {
                       </h2>
                     </div>
                     <div className="col-sm-6">
-                      <MacroCreateModal />
+                      <MacroCreateModal deleteAllItems={this.deleteAllItems} />
                     </div>
                   </div>
                 </div>
@@ -139,7 +189,7 @@ class Index extends Component {
                       <th>
                         <span className="custom-checkbox">
                           <input type="checkbox" id="selectAll" />
-                          <label htmlFor="selectAll"></label>
+                          <label htmlFor="selectAll" />
                         </span>
                       </th>
                       <th>Name</th>
@@ -193,6 +243,44 @@ class Index extends Component {
                     </li>
                   </ul>
                 </div>
+              </div>
+            </div>
+          ) : null}
+          {userData.length === 0 ? (
+            <div className="container">
+              <div className="table-wrapper">
+                <div className="table-title">
+                  <div className="row">
+                    <div className="col-sm-6">
+                      <h2>
+                        Manage <b>Macros</b>
+                      </h2>
+                    </div>
+                    <div className="col-sm-6">
+                      <MacroCreateModal />
+                    </div>
+                  </div>
+                </div>
+                <table className="table table-striped table-hover">
+                  <thead>
+                    <tr>
+                      <th>
+                        <span className="custom-checkbox">
+                          <input type="checkbox" id="selectAll" />
+                          <label htmlFor="selectAll" />
+                        </span>
+                      </th>
+                      <th>Name</th>
+                      <th>Macro type</th>
+                      <th>Subject</th>
+                      <th>Body</th>
+                      <th>Created at</th>
+                      <th>Updated at</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                </table>
+                <h3>No data found</h3>
               </div>
             </div>
           ) : null}

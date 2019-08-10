@@ -27,8 +27,10 @@
   "dependencies": {
     "@emotion/core": "^10.0.14",
     "auto-bind": "^2.1.0",
+    "babel-polyfill": "^6.26.0",
     "connected-react-router": "^6.5.0",
     "emoji-mart": "^2.11.1",
+    "es6-promise": "^4.2.8",
     "final-form": "^4.18.2",
     "froala-editor": "^3.0.4",
     "history": "^4.9.0",

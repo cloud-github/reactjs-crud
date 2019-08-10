@@ -3,9 +3,10 @@ var webpack = require("webpack");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  entry: {
+  /*entry: {
     main: path.resolve(__dirname, "../src", "index.js")
-  },
+  },*/
+  entry: ["babel-polyfill", path.resolve(__dirname, "../src", "index.js")],
   output: {
     filename: "[name].[hash].js",
     path: path.resolve(__dirname, "../dist"),

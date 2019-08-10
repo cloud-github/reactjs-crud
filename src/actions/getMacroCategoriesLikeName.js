@@ -1,37 +1,28 @@
-import { store } from "../store";
+const getMacroCategoriesLikeName = query => async () => {
+  function onSuccess(response) {
+    return response.data;
+  }
 
-export const fetch_macro_post = () => {
-  return {
-    type: "FETCH_MACRO_POST"
-  };
-};
+  function onError(error) {
+    return error;
+  }
 
-export const receive_macro_post = post => {
-  return {
-    type: "FETCHED_MACRO_POST",
-    data: post
-  };
-};
-
-export const receive_macro_post_error = post => {
-  return {
-    type: "RECEIVE_MACRO_POST_ERROR",
-    data: post
-  };
-};
-
-export const getMacroData = () => {
-  store.dispatch(fetch_macro_post());
-  return function(dispatch /*getState*/) {
-    return fetch(`https://rails-api-only.herokuapp.com/v1/macros`)
+  try {
+    return fetch(`http://localhost:3001/v1/macro_categories`, {
+      params: { query: query, type: "like_name" }
+    })
       .then(data => data.json())
       .then(data => {
-        if (data.data && data.data.status >= 404) {
+        return onSuccess(data);
+        /*if (data.data && data.data.status >= 404) {
           dispatch(receive_macro_post_error(data.message));
         } else {
           dispatch(receive_macro_post(data));
-        }
+        }*/
       });
-    //.catch(err => dispatch(receive_macro_post_error()));
-  };
+  } catch (error) {
+    return onError(error);
+  }
 };
+
+export default getMacroCategoriesLikeName;

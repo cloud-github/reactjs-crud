@@ -26,7 +26,7 @@ const createMacro = values => () => {
     data.append("macro[macro_category_id]", values.macroCategoryId);
     data.append("macro[body]", values.type === "email" ? values.body : "");
     console.log("DATA : ", data);
-    return fetch(`http://localhost:3001/v1/macros`, {
+    return fetch(`https://rails-api-only.herokuapp.com/v1/macros`, {
       method: "POST",
       body: data
     })

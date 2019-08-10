@@ -8,7 +8,7 @@ const getMacroCategoriesLikeName = query => async () => {
   }
 
   try {
-    return fetch(`http://localhost:3001/v1/macro_categories`, {
+    return fetch(`https://rails-api-only.herokuapp.com/v1/macro_categories`, {
       params: { query: query, type: "like_name" }
     })
       .then(data => data.json())

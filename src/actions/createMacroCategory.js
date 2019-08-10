@@ -4,7 +4,7 @@ const createMacroCategory = value => () => {
   }
   try {
     console.log("DATA : ", value.name);
-    return fetch(`http://localhost:3001/v1/macro_categories`, {
+    return fetch(`https://rails-api-only.herokuapp.com/v1/macro_categories`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

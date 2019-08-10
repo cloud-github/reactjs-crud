@@ -23,7 +23,8 @@ class Index extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      checkedItems: new Map()
+      checkedItems: new Map(),
+      showEditModal: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.deleteAllItems = this.deleteAllItems.bind(this);
@@ -63,6 +64,7 @@ class Index extends Component {
   }
 
   render() {
+    console.log("macros: props: ", this.props.data);
     const {
       data: { isError, userData, isFetching }
     } = this.props;
@@ -119,8 +121,8 @@ class Index extends Component {
                   <a
                     href="#"
                     className="edit"
-                    onClick={e => {
-                      this.editItem(e);
+                    onClick={() => {
+                      this.editItem(listValue.id);
                     }}
                   >
                     <i

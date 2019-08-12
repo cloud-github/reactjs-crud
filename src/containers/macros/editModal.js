@@ -9,21 +9,18 @@ import { Form, Field } from "react-final-form";
 import {
   MACRO_TYPES,
   CHARCOUNTERMAX,
-  FILE_FIELD_NAME,
   MACRO_TYPES_OBJECT
 } from "../../constants/macros";
 import Froala from "../../components/froala";
 import { stripValueObject } from "../../utils/object";
-import updateMacro from "../../actions/macros/updateMacro";
-import destroyImage from "../../actions/macros/destroyImage";
-import renderDropzoneInput from "../../components/fileImport";
+import updateMacro from "../../actions/updateMacro";
 import selectInput from "../../components/selectInput/selectInput";
 import renderField from "../../components/miscellaneous/renderField";
 import selectCreatable from "../../components/selectInput/selectCreatable";
 import mentionsTextInput from "../../components/autoSuggestion/mentionsTextInput";
-import createMacroCategory from "../../actions/macroCategories/createMacroCategory";
-import getMergeVariablesLikeName from "../../actions/mergeVariables/getMergeVariablesLikeName";
-import getMacroCategoriesLikeName from "../../actions/macroCategories/getMacroCategoriesLikeName";
+import createMacroCategory from "../../actions/createMacroCategory";
+
+import getMacroCategoriesLikeName from "../../actions/getMacroCategoriesLikeName";
 
 const styles = {
   paddingBottom: 38
@@ -37,53 +34,53 @@ class MacroEditModal extends Component {
     };
     autoBind(this);
     this.macroCategorySearch = _.debounce(this.macroCategorySearch, 1000);
-    this.mergeVariableSearch = _.debounce(this.mergeVariableSearch, 1000);
   }
 
   onSubmit(values) {
+    const { initialData, onCloseEditModal } = this.props;
     let stripedValues = stripValueObject(values);
-    if (values.files) {
-      stripedValues.files = values.files;
+    const { updateMacro } = this.props;
+    updateMacro(initialData.id, stripedValues).then(response => {
+      if (response) {
+        onCloseEditModal();
+      }
+    });
+  }
+
+  initialValueFunction() {
+    const { initialData } = this.props;
+
+    return {
+      name: initialData.name,
+      body: initialData.body,
+      subject: {
+        rawText: initialData.subject
+      },
+      macroCategoryId: {
+        value: String(initialData.macro_category_id),
+        label: initialData.macro_category_name
+      },
+      type: MACRO_TYPES_OBJECT[initialData.macro_type]
+    };
+  }
+
+  validate(values) {
+    const errors = {};
+    if (!values.name) {
+      errors.name = "macro name is required!";
     }
-    const { macro, updateMacro } = this.props;
-    updateMacro(macro.id, stripedValues).then(response => {
-      if (response) {
-        const { addToMacros, onCloseModal } = this.props;
-        addToMacros(response, false, true);
-        onCloseModal();
-      }
-    });
-  }
-
-  handleDropdownInputChange(input) {
-    let inputValue = input.trim();
-    if (inputValue.length > 2) {
-      this.macroCategorySearch(input);
+    if (!values.subject || !values.subject.rawText.trim().length) {
+      errors.subject = `${
+        values.type.value === "sms" ? "message" : "subject"
+      } is required`;
     }
-  }
-
-  mergeVariableSearch(value, callback) {
-    const { getMergeVariablesLikeName } = this.props;
-    getMergeVariablesLikeName(value).then(response => {
-      if (response) {
-        callback(
-          response.data.map(variable => ({
-            id: String(variable.id),
-            display: variable.data_key
-          }))
-        );
-      }
-    });
-  }
-
-  handleRemoveImage(id) {
-    const { destroyImage } = this.props;
-    destroyImage(id).then(response => {
-      if (response) {
-        const { removeImageInMacro, macro } = this.props;
-        removeImageInMacro(id, macro.id);
-      }
-    });
+    if (!values.macroCategoryId) {
+      errors.macroCategoryId = "category is required!";
+    }
+    if (!values.body && values.type.value === "email") {
+      errors.body = "email content is required!";
+    }
+    return errors;
   }
 
   handleDropdownChange(newValue, actionMeta, change) {
@@ -119,61 +116,26 @@ class MacroEditModal extends Component {
     });
   }
 
-  validate(values) {
-    const errors = {};
-    if (!values.name) {
-      errors.name = "macro name is required!";
-    }
-    if (!values.subject || !values.subject.text.trim().length) {
-      errors.subject = `${
-        values.type.value === "sms" ? "message" : "subject"
-      } is required`;
-    }
-    if (!values.macroCategoryId) {
-      errors.macroCategoryId = "category is required!";
-    }
-    if (!values.body && values.type.value === "email") {
-      errors.body = "email content is required!";
-    }
-    return errors;
-  }
+  handleDropdownInputChange(input) {
+    let inputValue = input.trim();
 
-  initialValueFunction() {
-    const { macro, macroCategory } = this.props;
-
-    return {
-      name: macro.attributes.name,
-      body: macro.attributes.body,
-      subject: {
-        text: macro.attributes.subject,
-        rawText: macro.attributes.rawSubject
-      },
-      macroCategoryId: {
-        value: String(macroCategory.id),
-        label: macroCategory.attributes.name
-      },
-      type: MACRO_TYPES_OBJECT[macro.attributes.macroType]
-    };
+    if (inputValue.length > 2) {
+      this.macroCategorySearch(inputValue);
+    }
   }
 
   render() {
-    const {
-      macro,
-      showModal,
-      onCloseModal,
-      getMergeVariablesLikeName
-    } = this.props;
     const { macroCategoriesOptions } = this.state;
+    const { onCloseEditModal, open } = this.props;
+
     return (
-      <div style={styles}>
-        <Modal open={showModal} onClose={onCloseModal} center>
+      <div>
+        <Modal open={open} onClose={onCloseEditModal} center>
           <div className="modal-wrapper">
             <div className="modal-header">
               <div className="w-row">
                 <div className="w-col w-col-10">
-                  <div className="modal-title">
-                    Edit macros for your organization with Relay
-                  </div>
+                  <div className="modal-title">Edit email or SMS macros.</div>
                 </div>
               </div>
             </div>
@@ -196,7 +158,7 @@ class MacroEditModal extends Component {
                       <form onSubmit={handleSubmit}>
                         <div className="row">
                           <div className="col-sm-12" style={styles}>
-                            <label>Type</label>
+                            {/*<label>Type</label>*/}
                             <Field
                               name="type"
                               options={MACRO_TYPES}
@@ -206,7 +168,7 @@ class MacroEditModal extends Component {
                           <div className="col-sm-12" style={styles}>
                             <Field
                               name="name"
-                              placeholder="Name Ex. Follow-up template"
+                              placeholder="Macro name"
                               type="text"
                               className="text-fields w-input"
                               component={renderField}
@@ -230,72 +192,49 @@ class MacroEditModal extends Component {
                             />
                           </div>
                           {type.value === "email" && (
-                            <div className="col-sm-5" style={styles}>
+                            <div className="col-sm-6" style={styles}>
                               <Field
                                 singleLine
                                 name="subject"
                                 component={mentionsTextInput}
-                                placeholder="Merge tag using '@'"
-                                mergeVariablesSearch={this.mergeVariableSearch}
+                                placeholder="Subject"
                               />
                             </div>
                           )}
 
                           {type.value === "sms" && (
-                            <div className="col-sm-5" style={styles}>
+                            <div className="col-sm-6" style={styles}>
                               <Field
                                 name="subject"
                                 component={mentionsTextInput}
                                 maxTextLength={CHARCOUNTERMAX}
-                                placeholder="Merge tag using '@'"
-                                mergeVariablesSearch={this.mergeVariableSearch}
+                                placeholder="Message"
                               />
                             </div>
                           )}
+
                           {type.value === "email" && (
                             <div className="col-sm-12">
-                              <Field
-                                name="body"
-                                getMergeVariablesLikeName={
-                                  getMergeVariablesLikeName
-                                }
-                                component={Froala}
-                              />
+                              <Field name="body" component={Froala} />
                             </div>
                           )}
+                        </div>
+                        <div className="row mt-4">
                           <div className="col-sm-12" style={styles}>
-                            <label htmlFor={FILE_FIELD_NAME}>
-                              Upload image
-                            </label>
-                            <Field
-                              multiple
-                              accept="image/*"
-                              maxSize={500000} // 500 kb
-                              name={FILE_FIELD_NAME}
-                              component={renderDropzoneInput}
-                              removeImage={this.handleRemoveImage}
-                              existingImages={macro.attributes.imagesData}
-                            />
-                          </div>
-                          <div className="row">
-                            <div className="col-md-6">
-                              <button
-                                type="button"
-                                className="btn btn-outline-danger"
-                                onClick={onCloseModal}
-                              >
-                                Cancel
-                              </button>
-                            </div>
-                            <div className="col-md-6">
-                              <button
-                                type="submit"
-                                className="btn btn-outline-primary"
-                                disabled={invalid || submitting}
-                              >
-                                Update Macro
-                              </button>
-                            </div>
+                            <button
+                              type="button"
+                              className="btn btn-outline-danger float-left"
+                              onClick={onCloseEditModal}
+                            >
+                              Cancel
+                            </button>
+                            <button
+                              type="submit"
+                              className="btn btn-outline-primary float-right"
+                              disabled={invalid || submitting}
+                            >
+                              Update Macro
+                            </button>
                           </div>
                         </div>
                       </form>
@@ -312,26 +251,27 @@ class MacroEditModal extends Component {
 }
 
 MacroEditModal.propTypes = {
-  showModal: PropTypes.bool.isRequired,
-  onCloseModal: PropTypes.func.isRequired,
+  initialData: PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+    body: PropTypes.string,
+    subject: PropTypes.string,
+    macro_category_id: PropTypes.number,
+    macro_category_name: PropTypes.string,
+    macro_type: PropTypes.string
+  }),
   updateMacro: PropTypes.func.isRequired,
-  addToMacros: PropTypes.func.isRequired,
-  destroyImage: PropTypes.func.isRequired,
-  removeImageInMacro: PropTypes.func.isRequired,
-  macro: PropTypes.instanceOf(Object).isRequired,
+  onCloseEditModal: PropTypes.func,
+  open: PropTypes.bool,
   createMacroCategory: PropTypes.func.isRequired,
-  getMergeVariablesLikeName: PropTypes.func.isRequired,
-  getMacroCategoriesLikeName: PropTypes.func.isRequired,
-  macroCategory: PropTypes.instanceOf(Object).isRequired
+  getMacroCategoriesLikeName: PropTypes.func.isRequired
 };
 
 export default connect(
   null,
   {
     updateMacro,
-    destroyImage,
     createMacroCategory,
-    getMergeVariablesLikeName,
     getMacroCategoriesLikeName
   }
 )(MacroEditModal);

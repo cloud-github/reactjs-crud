@@ -6,10 +6,11 @@ import Moment from "react-moment";
 import { css } from "@emotion/core";
 import { ClipLoader } from "react-spinners";
 import MacroCreateModal from "./createModal";
+import MacroEditModal from "./editModal";
 import Checkbox from "../../components/checkbox";
 import { getMacroData } from "../../actions/fetchMacros";
+import { getMacroCategoryName } from "../../actions/getMacroCategoryName";
 import { deleteMacro } from "../../actions/deleteMacro";
-import hero_img from "../../assets/images/hero.png";
 import Navbar from "../common/navbar";
 
 const override = css`
@@ -24,10 +25,13 @@ class Index extends Component {
     super(props);
     this.state = {
       checkedItems: new Map(),
-      showEditModal: false
+      open: false,
+      initialData: {}
     };
     this.handleChange = this.handleChange.bind(this);
     this.deleteAllItems = this.deleteAllItems.bind(this);
+    this.onCloseEditModal = this.onCloseEditModal.bind(this);
+    this.onEditItem = this.onEditItem.bind(this);
   }
 
   componentDidMount() {
@@ -35,13 +39,50 @@ class Index extends Component {
     dispatch(getMacroData());
   }
 
+  onEditItem(id) {
+    const { dispatch, data } = this.props;
+    data.userData.forEach(data => {
+      if (data.id === id) {
+        dispatch(getMacroCategoryName(data.attributes.macro_category_id))
+          .then(response => {
+            if (response) {
+              return response.name;
+            }
+          })
+          .then(cat_name => {
+            this.setState(
+              prevState => {
+                let initialData = Object.assign({}, prevState.initialData); // creating copy of state variable initialData
+                initialData.id = data.id; // update the name property, assign a new value
+                initialData.name = data.attributes.name;
+                initialData.macro_type = data.attributes.macro_type;
+                initialData.macro_category_id =
+                  data.attributes.macro_category_id;
+                initialData.macro_category_name = cat_name;
+                initialData.subject = data.attributes.subject;
+                initialData.body = data.attributes.body;
+                return { initialData }; // return new object initialData object
+              },
+              () => {
+                this.setState({
+                  open: true
+                });
+              }
+            );
+          });
+      }
+    });
+  }
+
+  onCloseEditModal() {
+    this.setState({
+      open: false
+    });
+  }
+
   deleteItem(id) {
     const { dispatch } = this.props;
     dispatch(deleteMacro(id));
-  }
-
-  editItem() {
-    console.log("item edit");
   }
 
   handleChange(e) {
@@ -54,8 +95,9 @@ class Index extends Component {
 
   deleteAllItems() {
     const { dispatch } = this.props;
+    const { checkedItems } = this.state;
     let tempIds = [];
-    for (const entry of this.state.checkedItems.entries()) {
+    for (const entry of checkedItems.entries()) {
       if (entry[1] === true) {
         tempIds.push(entry[0]);
       }
@@ -64,11 +106,10 @@ class Index extends Component {
   }
 
   render() {
-    console.log("macros: props: ", this.props.data);
     const {
       data: { isError, userData, isFetching }
     } = this.props;
-    const { checkedItems } = this.state;
+    const { checkedItems, open, initialData } = this.state;
 
     let macros = [];
     if (isError) {
@@ -122,7 +163,7 @@ class Index extends Component {
                     href="#"
                     className="edit"
                     onClick={() => {
-                      this.editItem(listValue.id);
+                      this.onEditItem(listValue.id);
                     }}
                   >
                     <i
@@ -182,6 +223,13 @@ class Index extends Component {
                     </div>
                     <div className="col-sm-6">
                       <MacroCreateModal deleteAllItems={this.deleteAllItems} />
+                      {open && (
+                        <MacroEditModal
+                          open={open}
+                          initialData={initialData}
+                          onCloseEditModal={this.onCloseEditModal}
+                        />
+                      )}
                     </div>
                   </div>
                 </div>
@@ -205,7 +253,7 @@ class Index extends Component {
                   </thead>
                   <tbody>{macros}</tbody>
                 </table>
-                <div className="clearfix">
+                {/*<div className="clearfix">
                   <div className="hint-text">
                     Showing <b>5</b> out of <b>25</b> entries
                   </div>
@@ -244,7 +292,7 @@ class Index extends Component {
                       </a>
                     </li>
                   </ul>
-                </div>
+                </div>*/}
               </div>
             </div>
           ) : null}
@@ -293,7 +341,8 @@ class Index extends Component {
 }
 
 Index.propTypes = {
-  data: PropTypes.object,
+  data: PropTypes.object.isRequired,
+  dispatch: PropTypes.func,
   isError: PropTypes.bool,
   isFetching: PropTypes.bool
 };

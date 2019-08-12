@@ -1,5 +1,4 @@
 import React from "react";
-/*import "./assets/styles/atwho.min.css";*/
 import "./assets/styles/style.css";
 import "../node_modules/froala-editor/css/froala_editor.css";
 import "../node_modules/froala-editor/css/froala_editor.pkgd.min.css";

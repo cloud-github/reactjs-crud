@@ -162,7 +162,6 @@ class Froala extends React.Component {
 
 Froala.propTypes = {
   input: PropTypes.instanceOf(Object).isRequired
-  //getMergeVariablesLikeName: PropTypes.func.isRequired
 };
 
 export default Froala;

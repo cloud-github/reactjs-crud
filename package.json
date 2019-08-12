@@ -1,19 +1,19 @@
 {
   "name": "reactjs_simple_crud",
   "version": "1.0.0",
-  "description": "Developer's portfolio site",
+  "description": "Create a CRUD app using Reactjs and Rails in a minute",
   "main": "index.js",
   "repository": "https://github.com/cloud-github",
   "author": "Mahesh Joshi <mahesh.connectnepal@gmail.com>",
   "license": "MIT",
   "keywords": [
-    "react portfolio github",
-    "front end react portfolio github",
-    "react js portfolio github",
-    "react portfolio template free",
-    "react projects for portfolio",
-    "personal portfolio github",
-    "react redux thunk react-router webpack4 eslint loaders pre configured boilerplate"
+    "Build a CRUD Interface with React and Ruby on Rails",
+    "How to Create a Simple CRUD App with Rails and React",
+    "deploy rails in heroku and reactjs in firebase",
+    "react rails tutorial 2019",
+    "react rails tutorial 2020",
+    "create app with rails as backend and reactjs as frontend",
+    "github rails and reactjs"
   ],
   "scripts": {
     "start": "webpack-dev-server --config=config/webpack.dev.js --hot",
@@ -35,7 +35,6 @@
     "froala-editor": "^3.0.4",
     "history": "^4.9.0",
     "immer": "^3.2.0",
-    "json-api-normalizer": "^0.4.16",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "prop-types": "^15.7.2",

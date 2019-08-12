@@ -23,7 +23,7 @@ export const receive_macro_post_error = post => {
 export const getMacroData = () => {
   store.dispatch(fetch_macro_post());
   return function(dispatch /*getState*/) {
-    return fetch(`https://rails-api-only.herokuapp.com/v1/macros`)
+    return fetch(`http://localhost:3001/v1/macros`)
       .then(data => data.json())
       .then(data => {
         console.log("DATA ###", data);

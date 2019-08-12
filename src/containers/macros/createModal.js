@@ -109,7 +109,7 @@ class MacroCreateModal extends Component {
         produce(draft => {
           draft.macroCategoriesOptions = response.map(data => ({
             value: String(data.id),
-            label: data.attributes.name
+            label: data.name
           }));
         })
       );
@@ -226,7 +226,7 @@ class MacroCreateModal extends Component {
                           )}
 
                           {type.value === "sms" && (
-                            <div className="col-sm-6" style={styles}>
+                            <div className="col-sm-10" style={styles}>
                               <Field
                                 name="subject"
                                 component={mentionsTextInput}

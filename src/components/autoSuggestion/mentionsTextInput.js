@@ -1,9 +1,7 @@
 import produce from "immer";
 import autoBind from "auto-bind";
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import { emojiIndex } from "emoji-mart";
-//import { Field } from "react-final-form";
 import * as utils from "react-mentions/lib/utils";
 import OutsideClickHandler from "react-outside-click-handler";
 import { MentionsInput, Mention } from "react-mentions";

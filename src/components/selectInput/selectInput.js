@@ -15,8 +15,6 @@ export default class SelectInput extends Component {
 
   handleChange(event) {
     const { input } = this.props;
-
-    // To be aligned with how redux-form publishes its CHANGE action payload. The event received is an object with 2 keys: "value" and "label"
     input.onChange && event != null
       ? input.onChange(event)
       : input.onChange(null);
@@ -32,7 +30,7 @@ export default class SelectInput extends Component {
       meta: { dirty, error },
       onChange,
       clearable,
-      handleInputChange // Used for async single select
+      handleInputChange
     } = this.props;
 
     const hasError = dirty && error;
@@ -64,7 +62,6 @@ export default class SelectInput extends Component {
   }
 }
 
-// Specifies the default values for props:
 SelectInput.defaultProps = {
   setDefault: false,
   multiple: false,
@@ -80,5 +77,5 @@ SelectInput.propTypes = {
   searchable: PropTypes.bool,
   placeholder: PropTypes.string,
   options: PropTypes.arrayOf(PropTypes.object).isRequired,
-  input: PropTypes.instanceOf(Object).isRequired // Said to not work cross-realms
+  input: PropTypes.instanceOf(Object).isRequired
 };

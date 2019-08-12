@@ -1,20 +1,20 @@
 import { store } from "../store";
 
-export const add_macro_post = post => {
+export const update_macro_post = post => {
   return {
-    type: "ADD_NEW_MACRO",
+    type: "UPDATE_MACRO",
     data: post
   };
 };
 
-export const receive_macro_post_error = post => {
+export const update_macro_post_error = post => {
   return {
-    type: "RECEIVE_MACRO_POST_ERROR",
+    type: "UPDATE_MACRO_POST_ERROR",
     data: post
   };
 };
 
-const createMacro = values => () => {
+const updateMacro = (id, values) => () => {
   function onError(error) {
     return error;
   }
@@ -23,21 +23,21 @@ const createMacro = values => () => {
     const data = new FormData();
     data.append("macro[name]", values.name);
     data.append("macro[macro_type]", values.type);
-    data.append("macro[subject]", values.subject.text);
+    data.append("macro[subject]", values.subject.rawText);
     data.append("macro[macro_category_id]", values.macroCategoryId);
     data.append("macro[body]", values.type === "email" ? values.body : "");
     console.log("DATA : ", data);
-    return fetch(`http://localhost:3001/v1/macros`, {
-      method: "POST",
+    return fetch(`http://localhost:3001/v1/macros/${id}`, {
+      method: "PUT",
       body: data
     })
       .then(data => data.json())
       .then(data => {
-        console.log("RESPONSE: ", data);
+        console.log("RESPONSE update: ", data);
         if (data.data && data.data.status >= 404) {
-          store.dispatch(receive_macro_post_error(data.message));
+          store.dispatch(update_macro_post_error(data.message));
         } else {
-          store.dispatch(add_macro_post(data.data));
+          store.dispatch(update_macro_post(data.data[0]));
           return data.data;
         }
       });
@@ -46,4 +46,4 @@ const createMacro = values => () => {
   }
 };
 
-export default createMacro;
+export default updateMacro;

@@ -19,8 +19,7 @@ export const deleteMacro = ids => () => {
     return error;
   }
   try {
-    console.log("DATA : ", ids);
-    return fetch(`http://localhost:3001/v1/macros`, {
+    return fetch(`https://rails-api-only.herokuapp.com/v1/macros`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json"

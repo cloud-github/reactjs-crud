@@ -23,10 +23,9 @@ export const receive_macro_post_error = post => {
 export const getMacroData = () => {
   store.dispatch(fetch_macro_post());
   return function(dispatch /*getState*/) {
-    return fetch(`http://localhost:3001/v1/macros`)
+    return fetch(`https://rails-api-only.herokuapp.com/v1/macros`)
       .then(data => data.json())
       .then(data => {
-        console.log("DATA ###", data);
         if (data.data && data.data.status >= 404) {
           dispatch(receive_macro_post_error(data.message));
         } else {

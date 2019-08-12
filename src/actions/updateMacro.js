@@ -19,21 +19,18 @@ const updateMacro = (id, values) => () => {
     return error;
   }
   try {
-    console.log("values:", values);
     const data = new FormData();
     data.append("macro[name]", values.name);
     data.append("macro[macro_type]", values.type);
     data.append("macro[subject]", values.subject.rawText);
     data.append("macro[macro_category_id]", values.macroCategoryId);
     data.append("macro[body]", values.type === "email" ? values.body : "");
-    console.log("DATA : ", data);
-    return fetch(`http://localhost:3001/v1/macros/${id}`, {
+    return fetch(`https://rails-api-only.herokuapp.com/v1/macros/${id}`, {
       method: "PUT",
       body: data
     })
       .then(data => data.json())
       .then(data => {
-        console.log("RESPONSE update: ", data);
         if (data.data && data.data.status >= 404) {
           store.dispatch(update_macro_post_error(data.message));
         } else {

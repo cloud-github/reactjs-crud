@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import FroalaEditorView from "react-froala-wysiwyg/FroalaEditorView";
+//import FroalaEditorView from "react-froala-wysiwyg/FroalaEditorView";
 import Moment from "react-moment";
 import { css } from "@emotion/core";
 import { ClipLoader } from "react-spinners";
@@ -141,15 +141,15 @@ class Index extends Component {
                 {listValue.attributes.macro_type === "email" && (
                   <Fragment>
                     <td>{listValue.attributes.subject}</td>
-                    <td>
+                    {/*<td>
                       {<FroalaEditorView model={listValue.attributes.body} />}
-                    </td>
+                    </td>*/}
                   </Fragment>
                 )}
                 {listValue.attributes.macro_type === "sms" && (
                   <Fragment>
                     <td> - - - </td>
-                    <td>{listValue.attributes.subject}</td>
+                    {/*<td>{listValue.attributes.subject}</td>*/}
                   </Fragment>
                 )}
                 <td>
@@ -237,15 +237,15 @@ class Index extends Component {
                   <thead>
                     <tr>
                       <th>
-                        <span className="custom-checkbox">
+                        {/*<span className="custom-checkbox">
                           <input type="checkbox" id="selectAll" />
                           <label htmlFor="selectAll" />
-                        </span>
+                        </span>*/}
                       </th>
                       <th>Name</th>
                       <th>Macro type</th>
                       <th>Subject</th>
-                      <th>Body</th>
+                      {/*<th>Body</th>*/}
                       <th>Created at</th>
                       <th>Updated at</th>
                       <th>Action</th>
@@ -315,15 +315,15 @@ class Index extends Component {
                   <thead>
                     <tr>
                       <th>
-                        <span className="custom-checkbox">
+                        {/*<span className="custom-checkbox">
                           <input type="checkbox" id="selectAll" />
                           <label htmlFor="selectAll" />
-                        </span>
+                        </span>*/}
                       </th>
                       <th>Name</th>
                       <th>Macro type</th>
                       <th>Subject</th>
-                      <th>Body</th>
+                      {/*<th>Body</th>*/}
                       <th>Created at</th>
                       <th>Updated at</th>
                       <th>Action</th>

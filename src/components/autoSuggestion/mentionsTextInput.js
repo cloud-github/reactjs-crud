@@ -143,7 +143,12 @@ export default class MentionsTextInput extends Component {
 
   render() {
     const { charCounter, showEmojiPopup, text, touched } = this.state;
-    const { maxTextLength, enforceMaxTextLength, ...rest } = this.props;
+    const {
+      maxTextLength,
+      isEmail,
+      enforceMaxTextLength,
+      ...rest
+    } = this.props;
     const {
       input,
       singleLine,
@@ -162,18 +167,27 @@ export default class MentionsTextInput extends Component {
             onClick={this.handleEmojiPopup}
             onKeyUp={this.handleEmojiPopup}
             className="fa fa-smile-o errspan"
-            style={{
-              position: "absolute",
-              bottom: "55px",
-              right: "11px",
-              zIndex: 200
-            }}
+            style={
+              isEmail
+                ? {
+                    position: "absolute",
+                    bottom: "55px",
+                    right: "-26px",
+                    zIndex: 100
+                  }
+                : {
+                    position: "absolute",
+                    bottom: "108px",
+                    right: "223px",
+                    zIndex: 100
+                  }
+            }
             role="button"
             tabIndex={0}
           />
         </OutsideClickHandler>
 
-        {maxTextLength && <span>Counter: {charCounter}</span>}
+        {maxTextLength && <span><b>Counter</b> : {charCounter}</span>}
         <MentionsInput
           //allowSpaceInQuery
           value={text}

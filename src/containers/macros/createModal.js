@@ -21,6 +21,18 @@ const styles = {
   paddingBottom: 38
 };
 
+const styles2 = {
+  paddingBottom: 48
+};
+
+const styles3 = {
+  paddingBottom: 28
+};
+
+const styles4 = {
+  paddingBottom: 44
+};
+
 class MacroCreateModal extends Component {
   constructor(props) {
     super(props);
@@ -151,7 +163,12 @@ class MacroCreateModal extends Component {
         >
           <i className="material-icons">&#xE15C;</i> <span>Delete</span>
         </button>
-        <Modal open={open} onClose={this.onCloseModal} center>
+        <Modal
+          //style={type.value === "email" && { width: 1250 }}
+          open={open}
+          onClose={this.onCloseModal}
+          center
+        >
           <div className="modal-wrapper">
             <div className="modal-header">
               <div className="w-row">
@@ -180,7 +197,7 @@ class MacroCreateModal extends Component {
                     }) => (
                       <form onSubmit={handleSubmit}>
                         <div className="row">
-                          <div className="col-sm-12" style={styles}>
+                          <div className="col-sm-12" style={styles2}>
                             {/*<label>Type</label>*/}
                             <Field
                               name="type"
@@ -188,7 +205,7 @@ class MacroCreateModal extends Component {
                               component={selectInput}
                             />
                           </div>
-                          <div className="col-sm-12" style={styles}>
+                          <div className="col-sm-12" style={styles3}>
                             <Field
                               name="name"
                               placeholder="Macro name"
@@ -197,7 +214,7 @@ class MacroCreateModal extends Component {
                               component={renderField}
                             />
                           </div>
-                          <div className="col-sm-12" style={styles}>
+                          <div className="col-sm-12" style={styles4}>
                             <Field
                               name="macroCategoryId"
                               component={selectCreatable}
@@ -218,32 +235,30 @@ class MacroCreateModal extends Component {
                             <div className="col-sm-6" style={styles}>
                               <Field
                                 singleLine
+                                isEmail
                                 name="subject"
                                 component={mentionsTextInput}
                                 placeholder="Subject"
                               />
                             </div>
                           )}
-
                           {type.value === "sms" && (
                             <div className="col-sm-10" style={styles}>
                               <Field
                                 name="subject"
+                                isEmail={false}
                                 component={mentionsTextInput}
                                 maxTextLength={CHARCOUNTERMAX}
                                 placeholder="Message"
                               />
                             </div>
                           )}
-
                           {type.value === "email" && (
-                            <div className="col-sm-12">
+                            <div className="col-sm-12" style={styles}>
                               <Field name="body" component={Froala} />
                             </div>
                           )}
-                        </div>
-                        <div className="row mt-4">
-                          <div className="col-sm-12" style={styles}>
+                          <div className="col-sm-12">
                             <button
                               type="button"
                               className="btn btn-outline-danger float-left"

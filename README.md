@@ -32,11 +32,11 @@ A simple portfolio website build with react, redux, redux-thunk, webpack4 with p
 
 ## Snapshots
 
-![alt text](https://raw.githubusercontent.com/cloud-github/react-redux-thunk-react-router-webpack4-eslint-css-loaders-image-loaders-all-configured-boilerplate/master/public/images/home_page.png)
+![alt text](https://raw.githubusercontent.com/cloud-github/react-redux-thunk-react-router-webpack4-eslint-css-loaders-image-loaders-all-configured-boilerplate/master/public/images/reactjs_rails_crud1.png)
 
-![alt text](https://raw.githubusercontent.com/cloud-github/react-redux-thunk-react-router-webpack4-eslint-css-loaders-image-loaders-all-configured-boilerplate/master/public/images/aboutme_page.png)
+![alt text](https://raw.githubusercontent.com/cloud-github/react-redux-thunk-react-router-webpack4-eslint-css-loaders-image-loaders-all-configured-boilerplate/master/public/images/reactjs_rails_crud2.png)
 
-![alt text](https://raw.githubusercontent.com/cloud-github/react-redux-thunk-react-router-webpack4-eslint-css-loaders-image-loaders-all-configured-boilerplate/master/public/images/route_not_found.png)
+![alt text](https://raw.githubusercontent.com/cloud-github/react-redux-thunk-react-router-webpack4-eslint-css-loaders-image-loaders-all-configured-boilerplate/master/public/images/reactjs_rails_crud3.png)
 
 ## Getting Started
 

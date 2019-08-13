@@ -2,6 +2,12 @@
  [![GitHub license](https://img.shields.io/badge/license-MIT-lime.svg)](https://github.com/cloud-github/reactjs-crud/blob/master/LICENSE) [![Build Status](https://travis-ci.org/cloud-github/react-redux-thunk-react-router-webpack4-eslint-loaders-pre-configured-boilerplate.svg?branch=master)](https://travis-ci.org/cloud-github/react-redux-thunk-react-router-webpack4-eslint-loaders-pre-configured-boilerplate)
 A simple CRUD application build with react, redux, redux-thunk, webpack4 followed industry standard coding pattern with production build ready.
 
+[CLICK TO SEE FRONTEND DEMO](https://reactjs-rails-crud-app.firebaseapp.com/)
+
+[RAILS BACKEND API ](https://rails-api-only.herokuapp.com/v1/macros)
+ 
+[CLICK TO SEE DEMO Video](https://www.youtube.com/watch?v=yqu9Vuev6mU&t=3s)
+
 * Ready to start React Redux App
 * SASS, CSS and Image loader all configured
 * Redux-thunk configured with react-router 
@@ -40,12 +46,7 @@ A simple CRUD application build with react, redux, redux-thunk, webpack4 followe
 * [Enzyme](https://airbnb.io/enzyme/docs/api/) - Enzyme is a JavaScript Testing utility for React.
 
 ## Snapshots
-
-[Click TO SEE FRONTEND DEMO](https://reactjs-rails-crud-app.firebaseapp.com/) 
-[Rails API ](https://rails-api-only.herokuapp.com/v1/macros)
  
-[CLICK TO SEE DEMO Video](https://www.youtube.com/watch?v=yqu9Vuev6mU&t=3s) 
-
 ![alt text](https://raw.githubusercontent.com/cloud-github/reactjs-crud/master/public/images/reactjs_rails_crud1.png)
 
 ![alt text](https://raw.githubusercontent.com/cloud-github/reactjs-crud/master/public/images/reactjs_rails_crud2.png)

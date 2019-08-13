@@ -294,6 +294,9 @@ class Index extends Component {
                   </ul>
                 </div>*/}
               </div>
+              <a href="https://github.com/cloud-github/reactjs-crud">
+                Download entire Code!
+              </a>
             </div>
           ) : null}
           {userData.length === 0 ? (
@@ -332,6 +335,9 @@ class Index extends Component {
                 </table>
                 <h3>No data found</h3>
               </div>
+              <a href="https://github.com/cloud-github/reactjs-crud">
+                Download entire Code!
+              </a>
             </div>
           ) : null}
         </section>

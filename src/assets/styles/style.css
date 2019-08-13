@@ -215,3 +215,7 @@ table.table .avatar {
 .modal form label {
   font-weight: normal;
 }
+a,
+a label {
+  cursor: pointer;
+}

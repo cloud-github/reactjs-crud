@@ -160,7 +160,7 @@ class Index extends Component {
                 </td>
                 <td>
                   <a
-                    href="#"
+                    href={null}
                     className="edit"
                     onClick={() => {
                       this.onEditItem(listValue.id);
@@ -175,7 +175,7 @@ class Index extends Component {
                     </i>
                   </a>
                   <a
-                    href="#"
+                    href={null}
                     className="delete"
                     onClick={() => {
                       if (

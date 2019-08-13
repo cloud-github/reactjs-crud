@@ -41,8 +41,9 @@ A simple CRUD application build with react, redux, redux-thunk, webpack4 followe
 
 ## Snapshots
 
-![alt text]()
-[![DEMO VIDEO](https://raw.githubusercontent.com/cloud-github/reactjs-crud/master/public/images/reactjs_rails_crud1.png)](https://www.youtube.com/watch?v=yqu9Vuev6mU&t=)
+[CLICK TO SEE DEMO](https://www.youtube.com/watch?v=yqu9Vuev6mU&t=3s) 
+
+![alt text](https://raw.githubusercontent.com/cloud-github/reactjs-crud/master/public/images/reactjs_rails_crud1.png)
 
 ![alt text](https://raw.githubusercontent.com/cloud-github/reactjs-crud/master/public/images/reactjs_rails_crud2.png)
 

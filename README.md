@@ -1,11 +1,14 @@
 # Simple CRUD (Create Read Update Delete) in React Js.
- [![GitHub license](https://img.shields.io/badge/license-MIT-lime.svg)](https://github.com/cloud-github/react-redux-thunk-react-router-webpack4-eslint-css-loaders-image-loaders-all-configured-boilerplate/blob/master/LICENSE) [![Build Status](https://travis-ci.org/cloud-github/react-redux-thunk-react-router-webpack4-eslint-loaders-pre-configured-boilerplate.svg?branch=master)](https://travis-ci.org/cloud-github/react-redux-thunk-react-router-webpack4-eslint-loaders-pre-configured-boilerplate)
-A simple portfolio website build with react, redux, redux-thunk, webpack4 with production build ready.
+ [![GitHub license](https://img.shields.io/badge/license-MIT-lime.svg)](https://github.com/cloud-github/reactjs-crud/blob/master/LICENSE) [![Build Status](https://travis-ci.org/cloud-github/react-redux-thunk-react-router-webpack4-eslint-loaders-pre-configured-boilerplate.svg?branch=master)](https://travis-ci.org/cloud-github/react-redux-thunk-react-router-webpack4-eslint-loaders-pre-configured-boilerplate)
+A simple CRUD application build with react, redux, redux-thunk, webpack4 followed industry standard coding pattern with production build ready.
 
 * Ready to start React Redux App
 * SASS, CSS and Image loader all configured
 * Redux-thunk configured with react-router 
 * Prop-types enabled
+* Supports Emoji's
+* Supports Checkbox
+* Supports Select creatable
 * Froala wysiwyg editor integrated
 * Webpack4 and babel configured
 * Hot reloading configured
@@ -23,6 +26,12 @@ A simple portfolio website build with react, redux, redux-thunk, webpack4 with p
 * [Connected React Router](https://github.com/supasate/connected-react-router) - A Redux binding for React Router v4 and v5.
 * [Prop Types](https://www.npmjs.com/package/prop-types) - Type checking for React props and similar objects.
 * [React Froala wysiwyg](https://www.froala.com/wysiwyg-editor/docs/framework-plugins/react) - The Next Generation WYSIWYG HTML Editor.
+* [Babel polyfill](https://babeljs.io/docs/en/babel-polyfill) - Babel polyfill allows you to use full sets of ES6 features. 
+* [Emoji Mart](https://www.npmjs.com/package/emoji-mart) - Emoji Mart is a Slack-like customizable emoji picker component for React 
+* [Lodash](https://www.npmjs.com/package/lodash) - Lodash is a JavaScript library which provides utility functions for common programming tasks using the functional programming paradigm.
+* [React Responsive Modal](https://www.npmjs.com/package/react-responsive-modal) - A simple responsive and accessible react modal compatible with React 16 and ready for React 17.
+* [React Select](https://www.npmjs.com/package/react-select) - The Select control for React.
+* [React Spinners](https://www.npmjs.com/package/react-spinners) - Loading spinners for React.js
 * [Eslint](https://eslint.org/) - Linting utility for JavaScript and JSX.
 * [Prettier](https://prettier.io/) - Code formatter.
 * [Babel](https://babeljs.io/) - Babel is javascript compiler which transpiles es6 into browser-compatible JavaScript code.
@@ -32,7 +41,8 @@ A simple portfolio website build with react, redux, redux-thunk, webpack4 with p
 
 ## Snapshots
 
-![alt text](https://raw.githubusercontent.com/cloud-github/reactjs-crud/master/public/images/reactjs_rails_crud1.png)
+![alt text]()
+[![DEMO VIDEO](https://raw.githubusercontent.com/cloud-github/reactjs-crud/master/public/images/reactjs_rails_crud1.png)](https://www.youtube.com/watch?v=yqu9Vuev6mU&t=)
 
 ![alt text](https://raw.githubusercontent.com/cloud-github/reactjs-crud/master/public/images/reactjs_rails_crud2.png)
 
@@ -42,7 +52,7 @@ A simple portfolio website build with react, redux, redux-thunk, webpack4 with p
 
 You can simply clone 
 
-``` git clone https://github.com/cloud-github/react-redux-thunk-react-router-webpack4-eslint-css-loaders-image-loaders-all-configured-boilerplate.git ```
+``` git clone https://github.com/cloud-github/reactjs-crud.git ```
 
 the boilerplate to get started.
 

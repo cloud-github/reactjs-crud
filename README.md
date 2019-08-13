@@ -41,7 +41,10 @@ A simple CRUD application build with react, redux, redux-thunk, webpack4 followe
 
 ## Snapshots
 
-[CLICK TO SEE DEMO](https://www.youtube.com/watch?v=yqu9Vuev6mU&t=3s) 
+[Click TO SEE FRONTEND DEMO](https://reactjs-rails-crud-app.firebaseapp.com/) 
+[Rails API ](https://rails-api-only.herokuapp.com/v1/macros)
+ 
+[CLICK TO SEE DEMO Video](https://www.youtube.com/watch?v=yqu9Vuev6mU&t=3s) 
 
 ![alt text](https://raw.githubusercontent.com/cloud-github/reactjs-crud/master/public/images/reactjs_rails_crud1.png)
 
@@ -120,6 +123,20 @@ OR
 ```CLI
 npm run analyze
 ```
+That's all for Reactjs frontend Part
+
+### Rails Part
+
+To do CRUD operation, you also need backend.
+You can use any backend, you like.
+
+OR, You can clone this ready made ruby on rails backend.
+
+```CLI
+git clone https://github.com/cloud-github/rails_api_only.git
+```
+
+Follow further instructions using this link.  https://github.com/cloud-github/rails_api_only.git
 
 If you like the project, please don't forget to give a star. Thanks in advance.
 
